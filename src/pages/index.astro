@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+/**
+ * Home Page
+ *
+ * Main landing page for the Wash Your Bowls website.
+ * Composes all major components into a complete page experience.
+ */
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import BlogList from "../components/BlogList.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../data/blog-posts.js";
+import { getRecentPosts } from "../utils/substack.js";
+
+// Fetch 3 most recent posts at build time
+const recentPosts = await getRecentPosts(3);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title={siteConfig.title} description={siteConfig.description}>
+	<Navigation />
+	<Hero />
+	<About />
+	<BlogList posts={recentPosts} />
+	<Footer />
+</BaseLayout>

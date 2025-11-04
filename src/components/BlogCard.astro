@@ -1,0 +1,128 @@
+---
+/**
+ * BlogCard Component
+ *
+ * Reusable card component for displaying blog post previews.
+ * Accepts blog post data as props.
+ */
+
+interface Props {
+	title: string;
+	excerpt: string;
+	date: string;
+	readTime: string;
+	slug: string;
+}
+
+const { title, excerpt, date, readTime, slug } = Astro.props;
+
+/**
+ * Format date for display (e.g., "NOV 02, 2025")
+ */
+function formatDate(dateStr: string): string {
+	const dateObj = new Date(dateStr);
+	const month = dateObj.toLocaleString("en-US", { month: "short" });
+	const day = dateObj.getDate().toString().padStart(2, "0");
+	const year = dateObj.getFullYear();
+	return `${month.toUpperCase()} ${day}, ${year}`;
+}
+
+const formattedDate = formatDate(date);
+---
+
+<a href={`/blog/${slug}`} class="blog-card">
+	<p class="blog-card__meta">{formattedDate} · {readTime}</p>
+	<h3 class="blog-card__title">{title}</h3>
+	<p class="blog-card__excerpt">{excerpt}</p>
+	<p class="blog-card__read-more">READ →</p>
+</a>
+
+<style>
+	/* Blog Card - Mobile First */
+	.blog-card {
+		border: 2px solid var(--color-border);
+		padding: var(--spacing-lg);
+		background-color: var(--color-bg);
+		transition: all var(--transition-base);
+		text-decoration: none;
+		display: block;
+		position: relative;
+		min-height: var(--min-touch-target);
+	}
+
+	.blog-card:hover {
+		background-color: var(--color-hover-bg);
+		border-color: var(--color-accent);
+	}
+
+	/* Active/Touch state for mobile */
+	.blog-card:active {
+		background-color: var(--color-hover-bg);
+		border-color: var(--color-accent);
+	}
+
+	.blog-card__meta {
+		font-size: var(--font-size-meta);
+		font-weight: 500;
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-sm);
+		letter-spacing: 0.05em;
+	}
+
+	.blog-card__title {
+		font-size: var(--font-size-h3);
+		font-weight: 700;
+		color: var(--color-text-primary);
+		margin-bottom: var(--spacing-sm);
+		line-height: var(--line-height-tight);
+	}
+
+	.blog-card__excerpt {
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-md);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.blog-card__read-more {
+		font-size: var(--font-size-small);
+		font-weight: 500;
+		color: var(--color-text-primary);
+		text-align: right;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	/* Small Mobile Optimization */
+	@media (max-width: 374px) {
+		.blog-card {
+			padding: var(--spacing-md);
+		}
+
+		.blog-card__excerpt {
+			-webkit-line-clamp: 3; /* Show more text on very small screens */
+		}
+	}
+
+	/* Large Mobile/Tablet (481-768px) */
+	@media (min-width: 481px) and (max-width: 768px) {
+		.blog-card {
+			padding: var(--spacing-xl);
+		}
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.blog-card {
+			padding: var(--spacing-xl);
+		}
+
+		.blog-card:active {
+			background-color: var(--color-bg); /* Remove active state on desktop */
+		}
+	}
+</style>

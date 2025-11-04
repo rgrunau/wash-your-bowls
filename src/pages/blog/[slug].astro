@@ -1,0 +1,39 @@
+---
+/**
+ * Dynamic Blog Post Page
+ *
+ * Generates individual blog post pages from Substack RSS feed.
+ * Uses [slug] dynamic routing.
+ */
+
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+import { getAllPosts, getPostBySlug } from '../../utils/substack.js';
+
+// Generate static paths for all posts at build time
+export async function getStaticPaths() {
+	const posts = await getAllPosts();
+
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+// Get the post data from props
+const { post } = Astro.props;
+
+// If post not found, return 404 (this shouldn't happen with static generation)
+if (!post) {
+	return Astro.redirect('/404');
+}
+---
+
+<BlogPostLayout
+	title={post.title}
+	description={post.excerpt}
+	date={post.date}
+	readingTime={post.readingTime}
+	substackUrl={post.substackUrl}
+>
+	<div set:html={post.content} />
+</BlogPostLayout>

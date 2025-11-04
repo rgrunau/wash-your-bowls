@@ -1,0 +1,79 @@
+---
+/**
+ * SubstackSubscribe Component
+ *
+ * Embeds Substack subscription widget at the end of blog posts.
+ * Styled to match the brutalist aesthetic of the site.
+ */
+---
+
+<div class="substack-subscribe">
+	<h3 class="substack-subscribe__title">Subscribe to Wash Your Bowls</h3>
+	<p class="substack-subscribe__description">
+		Get new posts delivered directly to your inbox. Mindfulness, movement, and the next thing.
+	</p>
+	<iframe
+		src="https://rjgrunau.substack.com/embed"
+		width="100%"
+		height="320"
+		class="substack-subscribe__iframe"
+		frameborder="0"
+		scrolling="no"
+		title="Subscribe to Wash Your Bowls newsletter"
+	></iframe>
+</div>
+
+<style>
+	/* Substack Subscribe Widget - Mobile First */
+	.substack-subscribe {
+		margin: var(--spacing-3xl) auto 0;
+		padding: var(--spacing-md);
+		border: 2px solid var(--color-border);
+		background-color: var(--color-bg);
+		max-width: 720px;
+	}
+
+	.substack-subscribe__title {
+		font-size: 20px;
+		font-weight: 700;
+		color: var(--color-text-primary);
+		margin-bottom: var(--spacing-md);
+		letter-spacing: 0;
+		text-align: center;
+	}
+
+	.substack-subscribe__description {
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		text-align: center;
+		margin-bottom: var(--spacing-lg);
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.substack-subscribe__iframe {
+		border: 2px solid var(--color-border);
+		background-color: var(--color-bg);
+		border-radius: 0;
+		display: block;
+		width: 100%;
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.substack-subscribe {
+			margin-top: var(--spacing-5xl);
+			padding: var(--spacing-xl);
+		}
+
+		.substack-subscribe__title {
+			font-size: 24px;
+		}
+
+		.substack-subscribe__description {
+			font-size: 16px;
+		}
+	}
+</style>

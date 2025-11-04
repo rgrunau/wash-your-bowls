@@ -1,0 +1,126 @@
+---
+/**
+ * Footer Component
+ *
+ * Site footer with branding, copyright, and social links.
+ * Uses site configuration and social links data.
+ */
+
+import { siteConfig, socialLinks } from "../data/blog-posts.js";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+	<p class="footer__brand">{siteConfig.title.toUpperCase()}</p>
+	<p class="footer__copyright">© {currentYear} · All rights reserved</p>
+	<ul class="footer__links">
+		{
+			socialLinks.map((link, index) => (
+				<>
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
+					{index < socialLinks.length - 1 && (
+						<li class="footer__separator">/</li>
+					)}
+				</>
+			))
+		}
+	</ul>
+</footer>
+
+<style>
+	/* Footer - Mobile First */
+	.footer {
+		border-top: 2px solid var(--color-border);
+		padding: var(--spacing-2xl) var(--container-padding);
+		text-align: center;
+	}
+
+	.footer__brand {
+		font-size: var(--font-size-body);
+		font-weight: 700;
+		margin-bottom: var(--spacing-sm);
+		letter-spacing: 0.05em;
+	}
+
+	.footer__copyright {
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-lg);
+	}
+
+	.footer__links {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-sm);
+		list-style: none;
+		font-size: var(--font-size-meta);
+		font-weight: 500;
+	}
+
+	.footer__links li {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.footer__links a {
+		color: var(--color-text-primary);
+		text-decoration: none;
+		transition: color var(--transition-base);
+		padding: var(--spacing-xs);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: var(--min-touch-target);
+	}
+
+	.footer__links a:hover {
+		color: var(--color-accent);
+	}
+
+	.footer__separator {
+		color: var(--color-text-secondary);
+		display: none; /* Hide separators on mobile */
+	}
+
+	/* Large Mobile/Tablet (481-768px) */
+	@media (min-width: 481px) and (max-width: 768px) {
+		.footer {
+			padding: var(--spacing-xl) var(--container-padding);
+		}
+
+		.footer__links {
+			flex-direction: row;
+			gap: var(--spacing-md);
+		}
+
+		.footer__separator {
+			display: block;
+		}
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.footer {
+			padding: var(--spacing-2xl) var(--container-padding);
+		}
+
+		.footer__copyright {
+			margin-bottom: var(--spacing-md);
+		}
+
+		.footer__links {
+			flex-direction: row;
+			gap: var(--spacing-md);
+			font-size: var(--font-size-small);
+		}
+
+		.footer__separator {
+			display: block;
+		}
+	}
+</style>

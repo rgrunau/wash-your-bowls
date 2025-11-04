@@ -1,0 +1,81 @@
+---
+/**
+ * BlogList Component
+ *
+ * Container component for displaying a list of blog posts.
+ * Accepts posts array as prop or uses fallback data.
+ */
+
+import BlogCard from "./BlogCard.astro";
+
+interface Props {
+	posts: Array<{
+		title: string;
+		excerpt: string;
+		date: string;
+		readingTime: string;
+		slug: string;
+	}>;
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="blog" id="blog">
+	<div class="blog__header">
+		<h2 class="blog__title">BLOG</h2>
+	</div>
+	<div class="blog__list">
+		{
+			posts.map((post) => (
+				<BlogCard
+					title={post.title}
+					excerpt={post.excerpt}
+					date={post.date}
+					readTime={post.readingTime}
+					slug={post.slug}
+				/>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	/* Blog Section - Mobile First */
+	.blog {
+		padding: var(--section-padding-vertical) var(--container-padding);
+		max-width: var(--max-width-content);
+		margin: 0 auto;
+	}
+
+	.blog__header {
+		text-align: center;
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.blog__title {
+		font-size: var(--font-size-h1);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.blog__list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-lg);
+	}
+
+	/* Large Mobile/Tablet (481px+) */
+	@media (min-width: 481px) {
+		.blog__header {
+			margin-bottom: var(--spacing-3xl);
+		}
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.blog__title {
+			font-size: 64px;
+		}
+	}
+</style>

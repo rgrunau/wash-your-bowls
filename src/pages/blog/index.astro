@@ -1,0 +1,131 @@
+---
+/**
+ * Blog List Page
+ *
+ * Displays all blog posts from Substack feed, sorted newest first.
+ * Uses BlogCard component for consistent styling.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getAllPosts } from '../../utils/substack.js';
+
+// Fetch all posts at build time
+const posts = await getAllPosts();
+---
+
+<BaseLayout
+	title="Blog | Wash Your Bowls"
+	description="Thoughts on mindfulness, movement, and intentional action."
+>
+	<Navigation />
+
+	<section class="blog">
+		<div class="blog__header">
+			<h1 class="blog__title">BLOG</h1>
+			<p class="blog__subtitle">Thoughts on mindfulness, movement, and intentional action.</p>
+		</div>
+		<div class="blog__list">
+			{
+				posts.map((post) => (
+					<BlogCard
+						title={post.title}
+						excerpt={post.excerpt}
+						date={post.date}
+						readTime={post.readingTime}
+						slug={post.slug}
+					/>
+				))
+			}
+		</div>
+		{
+			posts.length === 0 && (
+				<div class="blog__empty">
+					<p>No posts found. Check back soon!</p>
+				</div>
+			)
+		}
+	</section>
+
+	<Footer />
+</BaseLayout>
+
+<style>
+	/* Blog List Page - Mobile First */
+	.blog {
+		padding: calc(var(--nav-height) + var(--spacing-3xl)) var(--container-padding)
+			var(--spacing-3xl);
+		max-width: var(--max-width-content);
+		margin: 0 auto;
+	}
+
+	.blog__header {
+		text-align: center;
+		margin-bottom: var(--spacing-2xl);
+		padding-bottom: var(--spacing-xl);
+		border-bottom: 2px solid var(--color-border);
+	}
+
+	.blog__title {
+		font-size: var(--font-size-h1);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		margin-bottom: var(--spacing-md);
+		color: var(--color-text-primary);
+	}
+
+	.blog__subtitle {
+		font-size: var(--font-size-body);
+		color: var(--color-text-secondary);
+		line-height: var(--line-height-base);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.blog__list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-lg);
+	}
+
+	.blog__empty {
+		text-align: center;
+		padding: var(--spacing-3xl) 0;
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-body);
+	}
+
+	/* Large Mobile/Tablet (481px+) */
+	@media (min-width: 481px) {
+		.blog__header {
+			margin-bottom: var(--spacing-3xl);
+			padding-bottom: var(--spacing-2xl);
+		}
+
+		.blog__list {
+			gap: var(--spacing-xl);
+		}
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.blog {
+			padding-top: calc(var(--nav-height) + 80px);
+			padding-bottom: 80px;
+		}
+
+		.blog__title {
+			font-size: 64px;
+		}
+
+		.blog__subtitle {
+			font-size: 18px;
+		}
+
+		.blog__list {
+			gap: var(--spacing-xl);
+		}
+	}
+</style>

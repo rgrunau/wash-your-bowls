@@ -1,0 +1,128 @@
+---
+/**
+ * About Component
+ *
+ * About section with two-column layout featuring description and quote.
+ * Uses site configuration data for content.
+ */
+
+import { siteConfig } from "../data/blog-posts.js";
+---
+
+<section class="about" id="about">
+	<div class="about__grid">
+		<div class="about__left">
+			<p class="about__label">{siteConfig.about.label}</p>
+			<h2 class="about__title">{siteConfig.about.title}</h2>
+			<p class="about__description">
+				{siteConfig.about.description}
+			</p>
+			<a href="#about" class="about__link">Read more →</a>
+		</div>
+		<div class="about__right">
+			<blockquote class="about__quote">
+				{siteConfig.about.quote}
+			</blockquote>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* About Section - Mobile First */
+	.about {
+		padding: var(--section-padding-vertical) var(--container-padding);
+		max-width: var(--max-width-content);
+		margin: 0 auto;
+	}
+
+	.about__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--spacing-2xl);
+	}
+
+	.about__label {
+		font-size: var(--font-size-small);
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		color: var(--color-accent);
+		margin-bottom: var(--spacing-lg);
+		text-transform: uppercase;
+	}
+
+	.about__title {
+		font-size: var(--font-size-h2);
+		font-weight: 700;
+		line-height: 1.1;
+		margin-bottom: var(--spacing-md);
+	}
+
+	.about__description {
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-lg);
+	}
+
+	.about__link {
+		display: inline-flex;
+		align-items: center;
+		font-size: var(--font-size-body);
+		font-weight: 500;
+		color: var(--color-text-primary);
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+		transition: border-color var(--transition-base);
+		padding: var(--spacing-xs) 0;
+		min-height: var(--min-touch-target);
+	}
+
+	.about__link:hover {
+		border-bottom-color: var(--color-accent);
+	}
+
+	.about__quote {
+		font-size: 24px;
+		line-height: 1.5;
+		color: var(--color-text-primary);
+		font-style: italic;
+		padding-top: var(--spacing-md);
+		border-top: 2px solid var(--color-border);
+	}
+
+	/* Large Mobile/Tablet (481-768px) */
+	@media (min-width: 481px) and (max-width: 768px) {
+		.about__grid {
+			gap: var(--spacing-3xl);
+		}
+
+		.about__quote {
+			font-size: 28px;
+		}
+	}
+
+	/* Desktop Styles (769px+) */
+	@media (min-width: 769px) {
+		.about__grid {
+			grid-template-columns: 400px 1fr;
+			gap: var(--spacing-3xl);
+		}
+
+		.about__label {
+			margin-bottom: var(--spacing-xl);
+		}
+
+		.about__quote {
+			font-size: 32px;
+			padding-top: 0;
+			border-top: none;
+		}
+	}
+
+	/* Large Desktop (1200px+) */
+	@media (min-width: 1200px) {
+		.about__grid {
+			grid-template-columns: 450px 1fr;
+		}
+	}
+</style>
