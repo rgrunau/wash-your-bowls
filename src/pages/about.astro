@@ -1,0 +1,153 @@
+---
+/**
+ * About Page
+ *
+ * Displays content from the about.md markdown file in the content collection.
+ * The markdown content is rendered with proper styling that matches the site's design.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { getEntry } from 'astro:content';
+
+// Get the about page content from the content collection
+const aboutEntry = await getEntry('pages', 'about');
+const { Content } = await aboutEntry.render();
+---
+
+<BaseLayout title={aboutEntry.data.title} description={aboutEntry.data.description}>
+	<Navigation />
+
+	<main class="about-page">
+		<div class="about-page__container">
+			<article class="about-page__content">
+				<Content />
+			</article>
+		</div>
+	</main>
+
+	<Footer />
+</BaseLayout>
+
+<style>
+	/* About Page Styles */
+	.about-page {
+		min-height: 100vh;
+		padding-top: var(--nav-height);
+		padding-bottom: var(--spacing-4xl);
+	}
+
+	.about-page__container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: var(--spacing-4xl) var(--container-padding);
+	}
+
+	.about-page__content {
+		color: var(--color-text-primary);
+		line-height: var(--line-height-relaxed);
+	}
+
+	/* Typography styles for markdown content */
+	.about-page__content :global(h1) {
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 700;
+		line-height: var(--line-height-tight);
+		margin-bottom: var(--spacing-xl);
+		color: var(--color-text-primary);
+		letter-spacing: -0.02em;
+	}
+
+	.about-page__content :global(h2) {
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 700;
+		line-height: var(--line-height-tight);
+		margin-top: var(--spacing-3xl);
+		margin-bottom: var(--spacing-lg);
+		color: var(--color-text-primary);
+		letter-spacing: -0.01em;
+	}
+
+	.about-page__content :global(h3) {
+		font-size: clamp(1.25rem, 3vw, 1.75rem);
+		font-weight: 600;
+		line-height: var(--line-height-base);
+		margin-top: var(--spacing-2xl);
+		margin-bottom: var(--spacing-md);
+		color: var(--color-text-primary);
+	}
+
+	.about-page__content :global(p) {
+		font-size: var(--font-size-body);
+		margin-bottom: var(--spacing-lg);
+		max-width: 65ch;
+	}
+
+	.about-page__content :global(blockquote) {
+		border-left: 4px solid var(--color-accent);
+		padding-left: var(--spacing-lg);
+		margin: var(--spacing-2xl) 0;
+		font-style: italic;
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.about-page__content :global(strong) {
+		font-weight: 700;
+		color: var(--color-text-primary);
+		font-size: 1.1em;
+		letter-spacing: 0.02em;
+	}
+
+	.about-page__content :global(a) {
+		color: var(--color-accent);
+		text-decoration: none;
+		border-bottom: 1px solid var(--color-accent);
+		transition: opacity var(--transition-base);
+	}
+
+	.about-page__content :global(a:hover) {
+		opacity: 0.7;
+	}
+
+	.about-page__content :global(ul),
+	.about-page__content :global(ol) {
+		margin-bottom: var(--spacing-lg);
+		padding-left: var(--spacing-xl);
+	}
+
+	.about-page__content :global(li) {
+		margin-bottom: var(--spacing-sm);
+		line-height: var(--line-height-relaxed);
+	}
+
+	/* Mobile styles */
+	@media (max-width: 768px) {
+		.about-page__container {
+			padding: var(--spacing-2xl) var(--spacing-lg);
+		}
+
+		.about-page__content :global(h1) {
+			margin-bottom: var(--spacing-lg);
+		}
+
+		.about-page__content :global(h2) {
+			margin-top: var(--spacing-2xl);
+			margin-bottom: var(--spacing-md);
+		}
+
+		.about-page__content :global(blockquote) {
+			padding-left: var(--spacing-md);
+			margin: var(--spacing-xl) 0;
+		}
+	}
+
+	/* Desktop styles */
+	@media (min-width: 769px) {
+		.about-page__container {
+			padding: var(--spacing-5xl) var(--spacing-2xl);
+		}
+	}
+</style>

@@ -7,17 +7,17 @@
  */
 
 import { navItems } from "../data/blog-posts.js";
-import ensoLogo from "../assets/enso_2.png";
+import logo from "../assets/LogoMark.svg";
 ---
 
 <nav class="nav">
-	<div class="nav__logo">
+	<a href="/" class="nav__logo" aria-label="Go to home page">
 		<img
-			src={ensoLogo.src}
+			src={logo.src}
 			alt="Wash Your Bowls Logo"
 			class="nav__logo-image"
 		/>
-	</div>
+	</a>
 	<ul class="nav__menu">
 		{
 			navItems.map((item, index) => (
@@ -56,6 +56,13 @@ import ensoLogo from "../assets/enso_2.png";
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+		text-decoration: none;
+		cursor: pointer;
+		transition: opacity var(--transition-base);
+	}
+
+	.nav__logo:hover {
+		opacity: 0.7;
 	}
 
 	.nav__logo-image {

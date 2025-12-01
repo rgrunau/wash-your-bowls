@@ -36,6 +36,11 @@ const currentYear = new Date().getFullYear();
 		border-top: 2px solid var(--color-border);
 		padding: var(--spacing-2xl) var(--container-padding);
 		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--spacing-md);
 	}
 
 	.footer__brand {
@@ -53,7 +58,7 @@ const currentYear = new Date().getFullYear();
 
 	.footer__links {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
 		gap: var(--spacing-sm);
 		list-style: none;
